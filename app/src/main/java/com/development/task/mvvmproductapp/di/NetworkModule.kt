@@ -1,9 +1,8 @@
 package com.development.task.mvvmproductapp.di
 
 import android.content.Context
-import android.provider.SyncStateContract
 import com.development.task.mvvmproductapp.BuildConfig
-import com.development.task.mvvmproductapp.Constants
+import com.development.task.mvvmproductapp.constants.Constants
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.gson.Gson
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -15,6 +14,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
+import okhttp3.logging.HttpLoggingInterceptor
+
+
 
 @Module
 class NetworkModule {
@@ -36,7 +38,11 @@ class NetworkModule {
     @Provides
     @Singleton
     fun providesOkHttpClient(cache: Cache): OkHttpClient {
-        val client = OkHttpClient.Builder()
+        val logging = HttpLoggingInterceptor()
+        // set your desired log level
+        logging.level = HttpLoggingInterceptor.Level.BODY
+        val client = OkHttpClient.Builder().addInterceptor(logging)
+
             .cache(cache)
             .connectTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
