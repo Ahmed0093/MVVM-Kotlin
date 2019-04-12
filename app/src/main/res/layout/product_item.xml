@@ -21,6 +21,8 @@
 
         <TextView
                 android:id="@+id/tvTitle"
+                android:textStyle="bold"
+                android:textSize="20sp"
                 style="@style/Base.TextAppearance.AppCompat.Medium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -34,6 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/primary_text"
+                android:layout_marginRight="5dp"
                 tools:text="50"
                 android:gravity="right"/>
 
@@ -42,7 +45,7 @@
                 android:layout_below="@+id/tvPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleType="centerCrop"
+                android:layout_centerInParent="true"
                 tools:background="@mipmap/ic_launcher"/>
 
     </RelativeLayout>

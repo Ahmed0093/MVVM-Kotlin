@@ -2,4 +2,5 @@
     <string name="app_name">MVVMProductApp</string>
     <string name="need_internet_posts">need Internet posts</string>
     <string name="failed_post_try_again">Failure</string>
+    <string name="post_clicked">postCClicked</string>
 </resources>
