@@ -1,10 +1,7 @@
 package com.development.task.mvvmproductapp.list.model
 
-import com.development.task.mvvmproductapp.data.remote.PostService
+import com.development.task.mvvmproductapp.data.remote.ProductService
 
-class ListRemoteData(private val postService: PostService) : ListDataContract.Remote {
-
-//    override fun getUsers() = postService.getUsers()
-
-    override fun getPosts() = postService.getPosts()
+class ListRemoteData(private val productService: ProductService) : ListDataContract.Remote {
+    override fun getPosts() = productService.getProducts()
 }

@@ -2,14 +2,14 @@ package com.development.task.mvvmproductapp.list.di
 
 import android.arch.persistence.room.Room
 import android.content.Context
-import com.development.task.mvvmproductapp.Constants
+import com.development.task.mvvmproductapp.constants.Constants
 import com.development.task.mvvmproductapp.data.local.ProductDb
-import com.development.task.mvvmproductapp.di.CoreComponent
-import com.development.task.mvvmproductapp.list.PostListAdapter
+import com.development.task.mvvmproductapp.di.AppComponent
+import com.development.task.mvvmproductapp.list.ProductListAdapter
 import com.development.task.mvvmproductapp.networking.Scheduler
-import com.development.task.mvvmproductapp.data.remote.PostService
+import com.development.task.mvvmproductapp.data.remote.ProductService
 import com.development.task.mvvmproductapp.list.ProducListActivity
-import com.karntrehan.posts.list.di.ListScope
+import com.development.task.mvvmproductapp.list.ProductDetailsActivity
 import com.squareup.picasso.Picasso
 import dagger.Component
 import com.development.task.mvvmproductapp.list.model.ListDataContract
@@ -24,17 +24,19 @@ import io.reactivex.disposables.CompositeDisposable
 import retrofit2.Retrofit
 
 @ListScope
-@Component(dependencies = [CoreComponent::class], modules = [ListModule::class])
+@Component(dependencies = [AppComponent::class], modules = [ListModule::class])
 interface ListComponent {
 
     //Expose to dependent components
     fun productDb(): ProductDb
 
-    fun postService(): PostService
+    fun postService(): ProductService
     fun picasso(): Picasso
     fun scheduler(): Scheduler
 
     fun inject(producListActivity: ProducListActivity)
+    fun inject(productDetailsActivity: ProductDetailsActivity)
+
 }
 
 @Module
@@ -44,7 +46,7 @@ class ListModule {
     /*Adapter*/
     @Provides
     @ListScope
-    fun adapter(picasso: Picasso): PostListAdapter = PostListAdapter(picasso)
+    fun adapter(picasso: Picasso): ProductListAdapter = ProductListAdapter(picasso)
 
     /*ViewModel*/
     @Provides
@@ -59,11 +61,11 @@ class ListModule {
 
     @Provides
     @ListScope
-    fun remoteData(postService: PostService): ListDataContract.Remote = ListRemoteData(postService)
+    fun remoteData(productService: ProductService): ListDataContract.Remote = ListRemoteData(productService)
 
     @Provides
     @ListScope
-    fun localData(postDb: ProductDb, scheduler: Scheduler): ListDataContract.Local = ListLocalData(postDb, scheduler)
+    fun localData(productDb: ProductDb, scheduler: Scheduler): ListDataContract.Local = ListLocalData(productDb, scheduler)
 
     @Provides
     @ListScope
@@ -76,5 +78,5 @@ class ListModule {
 
     @Provides
     @ListScope
-    fun productService(retrofit: Retrofit): PostService = retrofit.create(PostService::class.java)
+    fun productService(retrofit: Retrofit): ProductService = retrofit.create(ProductService::class.java)
 }

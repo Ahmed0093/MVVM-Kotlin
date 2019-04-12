@@ -1,8 +1,6 @@
 package com.development.task.mvvmproductapp.data.local
 
-import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.*
-import com.development.task.mvvmproductapp.data.local.Product
 import io.reactivex.Flowable
 
 
@@ -10,11 +8,12 @@ import io.reactivex.Flowable
 interface ProductDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun upsertAll(products: List<Product>)
+    @JvmSuppressWildcards
+    fun upsertAll(products: List<ProductModel>)
 
     @Delete
-    fun delete(product: Product)
+    fun delete(product: ProductModel)
 
-    @Query("SELECT * FROM product")
-    fun getAll(): LiveData<List<Product>>
+    @Query("SELECT * FROM ProductModel")
+    fun getAll(): Flowable<List<ProductModel>>
 }

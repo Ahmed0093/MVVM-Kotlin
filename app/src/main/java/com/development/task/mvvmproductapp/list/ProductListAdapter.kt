@@ -1,6 +1,5 @@
 package com.development.task.mvvmproductapp.list
 
-import android.support.v4.view.ViewCompat
 import android.support.v7.recyclerview.extensions.ListAdapter
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
@@ -12,13 +11,13 @@ import android.widget.ImageView
 import android.widget.TextView
 
 import com.development.task.mvvmproductapp.R
-import com.development.task.mvvmproductapp.data.PostWithUser
+import com.development.task.mvvmproductapp.data.local.ProductModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.product_item.view.*
 
 
-class PostListAdapter(private val picasso: Picasso)
-    : ListAdapter<PostWithUser, PostListAdapter.ListViewHolder>(PostWithUserDC()) {
+class ProductListAdapter(private val picasso: Picasso)
+    : ListAdapter<ProductModel, ProductListAdapter.ListViewHolder>(PostWithUserDC()) {
 
     var interaction: Interaction? = null
 
@@ -33,7 +32,7 @@ class PostListAdapter(private val picasso: Picasso)
             position: Int
     ) = holder.bind(getItem(position), picasso)
 
-    fun swapData(data: List<PostWithUser>) {
+    fun swapData(data: List<ProductModel>) {
         submitList(data.toMutableList())
     }
 
@@ -51,30 +50,26 @@ class PostListAdapter(private val picasso: Picasso)
             interaction?.postClicked(clicked, itemView.tvTitle, itemView.tvPrice, itemView.ivAvatar)
         }
 
-        fun bind(item: PostWithUser, picasso: Picasso) = with(itemView) {
-            tvTitle.text = item.postTitle
-            tvPrice.text = item.getFormattedPostBody()
-            picasso.load(item.getAvatarPhoto())
+        fun bind(item: ProductModel, picasso: Picasso) = with(itemView) {
+            tvTitle.text = item.title
+            tvPrice.text = item.price.toString()
+            picasso.load(item.image.link)
+                .resize(item.image.height.toInt(),item.image.width.toInt())
                     .into(itemView.ivAvatar)
-
-            //SharedItem transition
-            ViewCompat.setTransitionName(tvTitle, item.postTitle)
-            ViewCompat.setTransitionName(tvPrice, item.postBody)
-            ViewCompat.setTransitionName(ivAvatar, item.getAvatarPhoto())
         }
     }
 
     interface Interaction {
         fun postClicked(
-                post: PostWithUser,
-                tvTitle: TextView,
-                tvBody: TextView,
-                ivAvatar: ImageView)
+            post: ProductModel,
+            tvTitle: TextView,
+            tvBody: TextView,
+            ivAvatar: ImageView)
     }
 
-    private class PostWithUserDC : DiffUtil.ItemCallback<PostWithUser>() {
-        override fun areItemsTheSame(oldItem: PostWithUser, newItem: PostWithUser) = oldItem.postId == newItem.postId
+    private class PostWithUserDC : DiffUtil.ItemCallback<ProductModel>() {
+        override fun areItemsTheSame(oldItem: ProductModel, newItem: ProductModel) = oldItem.productId == newItem.productId
 
-        override fun areContentsTheSame(oldItem: PostWithUser, newItem: PostWithUser) = oldItem == newItem
+        override fun areContentsTheSame(oldItem: ProductModel, newItem: ProductModel) = oldItem == newItem
     }
 }

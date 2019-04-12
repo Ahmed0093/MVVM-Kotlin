@@ -1,4 +1,4 @@
-package com.karntrehan.posts.list.di
+package com.development.task.mvvmproductapp.list.di
 
 import javax.inject.Scope
 

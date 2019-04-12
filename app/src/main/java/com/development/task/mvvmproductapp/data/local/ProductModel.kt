@@ -1,11 +1,27 @@
+//package com.development.task.mvvmproductapp.data.local
+//
+//import com.google.gson.annotations.Expose
+//import com.google.gson.annotations.SerializedName
+//
+//data class ProductModel (
+//    @SerializedName("id") val id: Int,
+//    @SerializedName("name") val name: String,
+//    @SerializedName("productDescription") val productDescription: String,
+//    @SerializedName("image") val image: PImage,
+//    @SerializedName("price") val price: Int)
+//
+//
+//
 package com.development.task.mvvmproductapp.data.local
 
+import android.annotation.SuppressLint
 import android.arch.persistence.room.Embedded
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
-import android.media.Image
+import android.os.Parcelable
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
 
 /**
@@ -14,14 +30,16 @@ import com.google.gson.annotations.SerializedName
  * @property productId the unique identifier of the productId
  * @property id the unique identifier of the product in DB
  * @property title the title of the Product
- * @property body the content of the product
+ * @property price the content of the product
+ * @property image the object of Image contains link,height and weight
  */
+@Parcelize
+@SuppressLint("ParcelCreator")
 @Entity
-data class Product(
-    @field:PrimaryKey
-    var id: Int,
+data class ProductModel(
     @SerializedName("id")
     @Expose
+    @PrimaryKey
     var productId: Int,
     @SerializedName("name")
     @Expose
@@ -34,6 +52,6 @@ data class Product(
     var price: Int,
     @SerializedName("image")
     @Expose
-    @Embedded var image: ProductImage
+    @Embedded var image: PImage
 
-)
+) :Parcelable
