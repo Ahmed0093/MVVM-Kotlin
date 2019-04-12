@@ -34,6 +34,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     testImplementation 'org.mockito:mockito-inline:2.11.0'
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
     // Support Design
     implementation "com.android.support:design:$android_support_version"
 
@@ -49,7 +50,10 @@ dependencies {
     // Room
     implementation "android.arch.persistence.room:runtime:$room_version"
     kapt "android.arch.persistence.room:compiler:$room_version"
-
+// RxJava support for Room
+    implementation "android.arch.persistence.room:rxjava2:1.1.1"
+// Testing support
+    androidTestImplementation "android.arch.core:core-testing:1.1.1"
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
