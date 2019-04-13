@@ -11,18 +11,18 @@ import org.junit.runners.JUnit4
 
 @RunWith(JUnit4::class)
 class ListRemoteDataTest {
-    private val postService = mock<ProductService>()
+    private val productService = mock<ProductService>()
 
     @Test
     fun getPosts() {
 
-        whenever(postService.getProducts()).thenReturn(
+        whenever(productService.getProducts()).thenReturn(
             Observable.just(
                 DummyData.getDummy()
             )
         )
 
-        ListRemoteData(postService).getPosts().test().run {
+        ListRemoteData(productService).getProducts().test().run {
             assertNoErrors()
             assertEquals(values().size, 1)
             assertEquals(values()[0].data.size, 2)
@@ -31,15 +31,3 @@ class ListRemoteDataTest {
         }
     }
 }
-//    @Test
-//    fun getPosts_IF_Failure() {
-//
-//        whenever(postService.getPosts()).thenReturn(
-//            Observable.just(throw error("error"))
-//        )
-//
-//        ListRemoteData(postService).getPosts().test().run {
-//            assertError(throw error("error"))
-//        }
-//    }
-//}

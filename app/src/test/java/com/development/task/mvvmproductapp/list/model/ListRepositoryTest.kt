@@ -8,12 +8,9 @@ import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Flowable
 import io.reactivex.Observable
-import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.observers.TestObserver
 import org.junit.Test
 
-import org.junit.Assert.*
 import org.junit.Before
 
 class ListRepositoryTest {
@@ -33,15 +30,15 @@ class ListRepositoryTest {
     fun fetchPosts() {
         val postWithUsersSuccess = DummyData.getDummy().data
         whenever(local.getData()).doReturn(Flowable.just(postWithUsersSuccess))
-        repository.fetchPosts()
+        repository.fetchProducts()
         verify(local).getData()
     }
 
     @Test
     fun refreshPosts() {
-        whenever(remote.getPosts()).doReturn(Observable.just(DummyData.getDummy()))
-        repository.refreshPosts()
-        verify(remote).getPosts()
+        whenever(remote.getProducts()).doReturn(Observable.just(DummyData.getDummy()))
+        repository.refreshProducs()
+        verify(remote).getProducts()
 
     }
 }

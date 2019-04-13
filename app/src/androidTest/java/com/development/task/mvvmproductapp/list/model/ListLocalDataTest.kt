@@ -34,10 +34,10 @@ class ListLocalDataTest {
     }
 
     /**
-     * Test that [ListLocalData.getPostsWithUsers] fetches the posts and users in the database
+     * Test that [ListLocalData.getData] fetches the ProductsList in the database
      * */
     @Test
-    fun testgetData() {
+    fun getDataTest() {
         productDb.postDao().upsertAll(dummyProductsList)
 
         listLocalData.getData().test().assertValue(dummyProductsList)
@@ -48,7 +48,7 @@ class ListLocalDataTest {
      * Test that [ListLocalData.saveProductLocal] saves the passed lists into the database
      * */
     @Test
-    fun saveUsersAndPosts() {
+    fun saveProductListTest() {
 
         listLocalData.saveProductLocal(dummyProductsList)
 
