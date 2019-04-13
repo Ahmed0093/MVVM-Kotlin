@@ -4,9 +4,12 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -51,44 +54,34 @@ class ProducListActivity : AppCompatActivity(), ProductListAdapter.Interaction {
 
         adapter.interaction = this
         rvPosts.adapter = adapter
-        srlPosts.setOnRefreshListener { viewModel.refreshPosts() }
-
-        viewModel.getPosts()
+        swipeRootView.setOnRefreshListener { viewModel.refreshViewModelProducts() }
         initiateDataListener()
+        viewModel.getProducts()
     }
 
     private fun initiateDataListener() {
         //Observe the outcome and update state of the screen  accordingly
-        viewModel.postsOutcome.observe(this, Observer<Outcome<Products>> { outcome ->
+        viewModel.productsOutcome.observe(this, Observer<Outcome<Products>> { outcome ->
             Log.d(TAG, "initiateDataListener: $outcome")
             when (outcome) {
 
-                is Outcome.Progress -> srlPosts.isRefreshing = outcome.loading
+                is Outcome.Progress -> swipeRootView.isRefreshing = outcome.loading
 
                 is Outcome.Success -> {
                     Log.d(TAG, "initiateDataListener: Successfully loaded data")
-                    adapter.swapData(outcome.data.data)
+                    adapter.submitList(outcome.data.data)
                 }
 
                 is Outcome.Failure -> {
 
                     if (outcome.e is IOException)
 
-                        Toast.makeText(
-                            context,
-                            R.string.need_internet_posts,
-                            Toast.LENGTH_LONG
-                        ).show()
+                        viewModel.showSnackBar(swipeRootView, getString(R.string.need_internet_posts))
                     else
-                        Toast.makeText(
-                            context,
-                            R.string.failed_post_try_again,
-                            Toast.LENGTH_LONG
-                        ).show()
+                        viewModel.showSnackBar(swipeRootView, getString(R.string.failed_post_try_again))
                 }
             }
         })
     }
-
 
 }

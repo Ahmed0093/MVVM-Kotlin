@@ -16,39 +16,37 @@ class ListRepository(
     private val compositeDisposable: CompositeDisposable
 ) : ListDataContract.Repository {
 
-    override val productFetchOutcome: PublishSubject<Outcome<Products>>
-        get() = PublishSubject.create<Outcome<Products>>() //To change initializer of created properties use File | Settings | File Templates.
-
-
-    override val postFetchOutcome: PublishSubject<Outcome<Products>> =
+    override val productRepoFetchOutcome: PublishSubject<Outcome<Products>> =
         PublishSubject.create<Outcome<Products>>()
 
-    override fun fetchPosts() {
-        postFetchOutcome.loading(true)
+    override fun fetchProducts() {
+        productRepoFetchOutcome.loading(true)
         local.getData()
             .performOnBackGroundOutOnMainThread(scheduler)
             .subscribe({ resultData ->
-                postFetchOutcome.success(Products(resultData, resultData.count()))
+                productRepoFetchOutcome.success(Products(resultData, resultData.count()))
             }, { error -> handleError(error) })
             .addTo(compositeDisposable)
     }
 
     override fun handleError(error: Throwable) {
-        postFetchOutcome.failed(error)
+        productRepoFetchOutcome.failed(error)
     }
 
-    override fun refreshPosts() {
-        productFetchOutcome.loading(true)
-        remote.getPosts()
+    override fun refreshProducs() {
+        productRepoFetchOutcome.loading(true)
+        remote.getProducts()
             .performOnBackGroundOutOnMainThread(scheduler)
-            .subscribe(this::handleResponse)
+            .subscribe({ resultData ->
+                productRepoFetchOutcome.success(handleResponse(resultData))
+            }, { error -> handleError(error) })
             .addTo(compositeDisposable)
     }
 
-    private fun handleResponse(productsData: Products) {
+    private fun handleResponse(productsData: Products) :Products {
         Log.d("tag", "list" + productsData.toString())
         local.saveProductLocal(productsData.data)
-        postFetchOutcome.success(productsData)
+        return productsData
     }
 
 }

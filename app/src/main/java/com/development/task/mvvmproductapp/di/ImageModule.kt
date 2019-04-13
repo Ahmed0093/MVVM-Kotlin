@@ -1,6 +1,8 @@
 package com.development.task.mvvmproductapp.di
 
 import android.content.Context
+import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
 import com.jakewharton.picasso.OkHttp3Downloader
 import com.squareup.picasso.Picasso
 import dagger.Module
@@ -22,5 +24,10 @@ class ImageModule {
         return Picasso.Builder(context)
                 .downloader(okHttp3Downloader)
                 .build()
+    }
+    @Provides
+    @Singleton
+    fun providesglideRequestManager(context: Context): RequestManager {
+        return Glide.with(context)
     }
 }

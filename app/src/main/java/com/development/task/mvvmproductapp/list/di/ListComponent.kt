@@ -2,12 +2,13 @@ package com.development.task.mvvmproductapp.list.di
 
 import android.arch.persistence.room.Room
 import android.content.Context
+import com.bumptech.glide.RequestManager
 import com.development.task.mvvmproductapp.constants.Constants
 import com.development.task.mvvmproductapp.data.local.ProductDb
 import com.development.task.mvvmproductapp.di.AppComponent
-import com.development.task.mvvmproductapp.list.ProductListAdapter
 import com.development.task.mvvmproductapp.networking.Scheduler
 import com.development.task.mvvmproductapp.data.remote.ProductService
+import com.development.task.mvvmproductapp.list.ProductListAdapter
 import com.development.task.mvvmproductapp.list.ProducListActivity
 import com.development.task.mvvmproductapp.list.ProductDetailsActivity
 import com.squareup.picasso.Picasso
@@ -30,7 +31,7 @@ interface ListComponent {
     //Expose to dependent components
     fun productDb(): ProductDb
 
-    fun postService(): ProductService
+    fun productService(): ProductService
     fun picasso(): Picasso
     fun scheduler(): Scheduler
 
@@ -40,13 +41,12 @@ interface ListComponent {
 }
 
 @Module
-@ListScope
 class ListModule {
 
     /*Adapter*/
     @Provides
     @ListScope
-    fun adapter(picasso: Picasso): ProductListAdapter = ProductListAdapter(picasso)
+    fun adapter(glideRequestManager: RequestManager): ProductListAdapter = ProductListAdapter(glideRequestManager)
 
     /*ViewModel*/
     @Provides

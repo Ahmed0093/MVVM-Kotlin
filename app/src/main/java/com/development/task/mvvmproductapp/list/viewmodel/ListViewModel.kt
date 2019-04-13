@@ -2,6 +2,10 @@ package com.development.task.mvvmproductapp.list.viewmodel
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
+import android.graphics.Color
+import android.support.design.widget.Snackbar
+import android.view.View
+import android.widget.TextView
 import com.development.task.mvvmproductapp.data.local.Products
 import com.development.task.mvvmproductapp.extensions.toLiveData
 import com.development.task.mvvmproductapp.list.ProductDH
@@ -14,19 +18,20 @@ class ListViewModel(private val repo: ListDataContract.Repository,
                     private val compositeDisposable: CompositeDisposable
 ) : ViewModel() {
 
-    val postsOutcome: LiveData<Outcome<Products>> by lazy {
+
+    val productsOutcome: LiveData<Outcome<Products>> by lazy {
        // Convert publish subject to livedata
-        repo.postFetchOutcome.toLiveData(compositeDisposable)
+        repo.productRepoFetchOutcome.toLiveData(compositeDisposable)
     }
 
 
-    fun getPosts() {
-        if (postsOutcome.value == null)
-            repo.fetchPosts()
+    fun getProducts() {
+        if (productsOutcome.value == null)
+            repo.fetchProducts()
     }
 
-    fun refreshPosts() {
-        repo.refreshPosts()
+    fun refreshViewModelProducts() {
+        repo.refreshProducs()
     }
     override fun onCleared() {
         super.onCleared()
@@ -34,4 +39,21 @@ class ListViewModel(private val repo: ListDataContract.Repository,
         compositeDisposable.clear()
         ProductDH.destroyListComponent()
     }
+
+    fun showSnackBar(view: View, snacBarText: String) {
+        //Snackbar(view)
+        val snackbar = Snackbar.make(
+            view, snacBarText,
+            Snackbar.LENGTH_LONG
+        ).setAction("Action", null)
+        snackbar.setActionTextColor(Color.BLUE)
+        val snackbarView = snackbar.view
+        snackbarView.setBackgroundColor(Color.LTGRAY)
+        val textView =
+            snackbarView.findViewById(android.support.design.R.id.snackbar_text) as TextView
+        textView.setTextColor(Color.BLUE)
+        textView.textSize = 28f
+        snackbar.show()
+    }
+
 }
