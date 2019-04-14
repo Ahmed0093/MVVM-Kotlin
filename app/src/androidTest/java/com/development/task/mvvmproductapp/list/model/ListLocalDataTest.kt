@@ -34,11 +34,11 @@ class ListLocalDataTest {
     }
 
     /**
-     * Test that [ListLocalData.getData] fetches the ProductsList in the database
+     * Test that [ListLocalData.getData] fetches the ProductsList from the database
      * */
     @Test
     fun getDataTest() {
-        productDb.postDao().upsertAll(dummyProductsList)
+        productDb.postDao().insertAll(dummyProductsList)
 
         listLocalData.getData().test().assertValue(dummyProductsList)
     }

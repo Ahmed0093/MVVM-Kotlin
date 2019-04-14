@@ -76,12 +76,28 @@ class ProducListActivity : AppCompatActivity(), ProductListAdapter.Interaction {
 
                     if (outcome.e is IOException)
 
-                        viewModel.showSnackBar(swipeRootView, getString(R.string.need_internet_posts))
+                        showSnackBar(swipeRootView, getString(R.string.need_internet_posts))
                     else
-                        viewModel.showSnackBar(swipeRootView, getString(R.string.failed_post_try_again))
+                        showSnackBar(swipeRootView, getString(R.string.failed_post_try_again))
                 }
             }
         })
+    }
+
+    fun showSnackBar(view: View, snacBarText: String) {
+        //Snackbar(view)
+        val snackbar = Snackbar.make(
+            view, snacBarText,
+            Snackbar.LENGTH_LONG
+        ).setAction("Action", null)
+        snackbar.setActionTextColor(Color.BLUE)
+        val snackbarView = snackbar.view
+        snackbarView.setBackgroundColor(Color.LTGRAY)
+        val textView =
+            snackbarView.findViewById(android.support.design.R.id.snackbar_text) as TextView
+        textView.setTextColor(Color.BLUE)
+        textView.textSize = 28f
+        snackbar.show()
     }
 
 }

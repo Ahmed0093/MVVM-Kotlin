@@ -1,7 +1,6 @@
 package com.development.task.mvvmproductapp.networking
 
 /**
- * Created by karn on 18/1/18.
  * Re-Used from Online Repository
  */
 sealed class Outcome<T> {

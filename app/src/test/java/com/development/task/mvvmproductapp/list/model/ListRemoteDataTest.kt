@@ -13,6 +13,9 @@ import org.junit.runners.JUnit4
 class ListRemoteDataTest {
     private val productService = mock<ProductService>()
 
+    /**
+     * Test that [ProductService.getProducts] fetches the ProductsList from the remote Api
+     * */
     @Test
     fun getPosts() {
 

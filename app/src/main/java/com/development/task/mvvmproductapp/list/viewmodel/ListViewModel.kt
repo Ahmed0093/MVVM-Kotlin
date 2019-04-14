@@ -40,20 +40,6 @@ class ListViewModel(private val repo: ListDataContract.Repository,
         ProductDH.destroyListComponent()
     }
 
-    fun showSnackBar(view: View, snacBarText: String) {
-        //Snackbar(view)
-        val snackbar = Snackbar.make(
-            view, snacBarText,
-            Snackbar.LENGTH_LONG
-        ).setAction("Action", null)
-        snackbar.setActionTextColor(Color.BLUE)
-        val snackbarView = snackbar.view
-        snackbarView.setBackgroundColor(Color.LTGRAY)
-        val textView =
-            snackbarView.findViewById(android.support.design.R.id.snackbar_text) as TextView
-        textView.setTextColor(Color.BLUE)
-        textView.textSize = 28f
-        snackbar.show()
-    }
+
 
 }

@@ -5,7 +5,10 @@ import com.development.task.mvvmproductapp.networking.Outcome
 import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
-
+/**
+* A ListDataContract  . Methods in this interface support fetching and saving the data
+ * whether from a remote api or from local data base
+*/
 interface ListDataContract {
     interface Repository {
         val productRepoFetchOutcome: PublishSubject<Outcome<Products>>

@@ -8,7 +8,10 @@ import com.development.task.mvvmproductapp.networking.Scheduler
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
 
-
+/**
+ * Repository abstracts the logic of fetching the data and persisting it for
+ * offline. They are the data source.
+ */
 class ListRepository(
     private val local: ListDataContract.Local,
     private val remote: ListDataContract.Remote,
@@ -18,7 +21,9 @@ class ListRepository(
 
     override val productRepoFetchOutcome: PublishSubject<Outcome<Products>> =
         PublishSubject.create<Outcome<Products>>()
-
+    /**
+     * Fetch the products from database
+     */
     override fun fetchProducts() {
         productRepoFetchOutcome.loading(true)
         local.getData()
@@ -32,7 +37,9 @@ class ListRepository(
     override fun handleError(error: Throwable) {
         productRepoFetchOutcome.failed(error)
     }
-
+    /**
+     * Fetch the products from remoteApi
+     */
     override fun refreshProducs() {
         productRepoFetchOutcome.loading(true)
         remote.getProducts()

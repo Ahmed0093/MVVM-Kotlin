@@ -1,5 +1,6 @@
 package com.development.task.mvvmproductapp.list.model
 
+import com.development.task.mvvmproductapp.data.remote.ProductService
 import com.development.task.mvvmproductapp.testing.DummyData
 import com.development.task.mvvmproductapp.testing.TestScheduler
 import com.nhaarman.mockitokotlin2.doReturn
@@ -25,7 +26,9 @@ class ListRepositoryTest {
         repository = ListRepository(local, remote, TestScheduler(), compositeDisposable)
     }
 
-
+    /**
+     * Verify that [ListRepository.fetchProducts] Calls [ListDataContract.Local.getData]
+      * */
     @Test
     fun fetchPosts() {
         val postWithUsersSuccess = DummyData.getDummy().data
@@ -33,7 +36,9 @@ class ListRepositoryTest {
         repository.fetchProducts()
         verify(local).getData()
     }
-
+    /**
+     * Verify that [ListRepository.refreshProducs] Calls [ListDataContract.Remote.getProducts]
+     * */
     @Test
     fun refreshPosts() {
         whenever(remote.getProducts()).doReturn(Observable.just(DummyData.getDummy()))

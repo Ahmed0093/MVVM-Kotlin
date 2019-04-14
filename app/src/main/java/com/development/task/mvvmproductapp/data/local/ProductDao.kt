@@ -9,7 +9,7 @@ interface ProductDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     @JvmSuppressWildcards
-    fun upsertAll(products: List<ProductModel>)
+    fun insertAll(products: List<ProductModel>)
 
     @Delete
     fun delete(product: ProductModel)

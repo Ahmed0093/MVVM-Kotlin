@@ -16,7 +16,7 @@ class ListLocalData(private val postDb: ProductDb, private val scheduler: Schedu
 
     override fun saveProductLocal(productModelList: List<ProductModel>) {
         Completable.fromAction {
-                        postDb.postDao().upsertAll(productModelList)
+                        postDb.postDao().insertAll(productModelList)
 
         }
                 .performOnBack(scheduler)
