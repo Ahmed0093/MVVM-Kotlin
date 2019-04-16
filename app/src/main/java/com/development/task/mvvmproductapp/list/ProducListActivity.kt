@@ -10,9 +10,7 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.util.Log
 import android.view.View
-import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import com.development.task.mvvmproductapp.R
 import com.development.task.mvvmproductapp.constants.Constants
 import com.development.task.mvvmproductapp.data.local.ProductModel
@@ -25,9 +23,9 @@ import java.io.IOException
 import javax.inject.Inject
 
 class ProducListActivity : AppCompatActivity(), ProductListAdapter.Interaction {
-    override fun postClicked(post: ProductModel, tvTitle: TextView, tvBody: TextView, ivAvatar: ImageView) {
+    override fun productClicked(productModel: ProductModel) {
         val intent = Intent(context, ProductDetailsActivity::class.java)
-        intent.putExtra(Constants.SELECTED_POST, post)
+        intent.putExtra(Constants.SELECTED_PRODUCT, productModel)
         context.startActivity(intent)
     }
 
