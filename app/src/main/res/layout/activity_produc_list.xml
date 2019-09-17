@@ -1,9 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <EditText
+            android:id="@+id/tvTitleDetails"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:gravity="center"
+            style="@style/Base.TextAppearance.AppCompat.Medium"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:textColor="@color/primary_text"
+            tools:text="Title to post"/>
 <android.support.v4.widget.SwipeRefreshLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/swipeRootView"
+        android:layout_below="@id/tvTitleDetails"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".list.ProducListActivity">
@@ -15,4 +32,6 @@
             android:scrollbars="none"
             tools:listitem="@layout/product_item"
             app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+
 </android.support.v4.widget.SwipeRefreshLayout>
+</RelativeLayout>

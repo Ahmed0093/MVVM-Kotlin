@@ -1,6 +1,8 @@
 package com.development.task.mvvmproductapp.list.model
 
 import android.util.Log
+import com.development.task.mvvmproductapp.data.adsdata.AdsList
+import com.development.task.mvvmproductapp.data.adsdata.AdsModel
 import com.development.task.mvvmproductapp.data.local.*
 import com.development.task.mvvmproductapp.extensions.*
 import com.development.task.mvvmproductapp.networking.Outcome
@@ -16,8 +18,30 @@ class ListRepository(
     private val local: ListDataContract.Local,
     private val remote: ListDataContract.Remote,
     private val scheduler: Scheduler,
-    private val compositeDisposable: CompositeDisposable
-) : ListDataContract.Repository {
+    private val compositeDisposable: CompositeDisposable,
+    override val adsRepoFetchOutcome: PublishSubject<Outcome<List<AdsModel>>> =
+        PublishSubject.create<Outcome<List<AdsModel>>>()
+
+
+    ) : ListDataContract.Repository {
+    override fun refreshAds() {
+        adsRepoFetchOutcome.loading(true)
+        remote.getAds()
+            .performOnBackGroundOutOnMainThread(scheduler)
+            .subscribe({ resultData ->
+                adsRepoFetchOutcome.success(handleAdsResponse(resultData))
+            }, { error -> handleError(error) })
+            .addTo(compositeDisposable)   }
+
+    override fun fetchAds() {
+        adsRepoFetchOutcome.loading(true)
+        local.getAdsData()
+            .performOnBackGroundOutOnMainThread(scheduler)
+            .subscribe({ resultData ->
+                adsRepoFetchOutcome.success(resultData)
+            }, { error -> handleError(error) })
+            .addTo(compositeDisposable)
+    }
 
     override val productRepoFetchOutcome: PublishSubject<Outcome<Products>> =
         PublishSubject.create<Outcome<Products>>()
@@ -54,6 +78,11 @@ class ListRepository(
         Log.d("tag", "list" + productsData.toString())
         local.saveProductLocal(productsData.data)
         return productsData
+    }
+    private fun handleAdsResponse(adsList: List<AdsModel>) : List<AdsModel> {
+        Log.d("tag", "list" + adsList.toString())
+        local.saveAdsLocal(adsList)
+        return adsList
     }
 
 }

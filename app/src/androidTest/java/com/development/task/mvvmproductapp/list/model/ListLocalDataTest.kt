@@ -30,6 +30,7 @@ class ListLocalDataTest {
         productDb = Room
             .inMemoryDatabaseBuilder(InstrumentationRegistry.getInstrumentation().context, ProductDb::class.java)
             .allowMainThreadQueries()
+            .addMigrations()
             .build()
     }
 

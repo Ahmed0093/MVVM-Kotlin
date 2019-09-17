@@ -27,11 +27,11 @@ class ListViewModel(private val repo: ListDataContract.Repository,
 
     fun getProducts() {
         if (productsOutcome.value == null)
-            repo.fetchProducts()
+            repo.fetchAds()
     }
 
     fun refreshViewModelProducts() {
-        repo.refreshProducs()
+        repo.refreshAds()
     }
     override fun onCleared() {
         super.onCleared()

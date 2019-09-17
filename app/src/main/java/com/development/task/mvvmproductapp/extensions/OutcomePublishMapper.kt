@@ -34,6 +34,21 @@ fun <T> PublishSubject<Outcome<T>>.success(t: T) {
         onNext(Outcome.success(t))
     }
 }
+//fun <T> PublishSubject<Outcome<List<T>>>.success2(t: T) {
+//    with(this){
+//        loading(false)
+//        onNext(Outcome.success2(t))
+//    }
+//}
+///**
+// * Extension function to push  a success event with data to the observing outcome
+// * */
+//fun <T> PublishSubject<Outcome<T>>.success(t: List<T>) {
+//    with(this){
+//        loading(false)
+//        onNext(Outcome.success(t))
+//    }
+//}
 
 /**
  * Extension function to push the loading status to the observing outcome
