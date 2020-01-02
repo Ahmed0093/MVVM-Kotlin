@@ -15,3 +15,4 @@ class StorageModule {
         return PreferenceManager.getDefaultSharedPreferences(context)
     }
 }
+//test comment
